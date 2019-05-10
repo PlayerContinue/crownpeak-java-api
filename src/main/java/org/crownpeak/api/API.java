@@ -1,5 +1,12 @@
 package org.crownpeak.api;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.apache.http.HttpResponse;
+import org.crownpeak.api.request.AuthenticateRequest;
+import org.crownpeak.api.response.AuthenticateResponse;
+
 /**
  * API Class required to perform any actions
  * @author dgree
@@ -7,18 +14,44 @@ package org.crownpeak.api;
  */
 public class API extends APIData{
 
+	/**
+	 * 
+	 * @param host - The url of the cms exclusing the instance name (usually cms.crownpeak.net)
+	 * @param instance - The instance name (Sandbox5 for example)
+	 * @param apiKey - Your api key
+	 */
 	public API(String host, String instance, String apiKey) {
 		this.apiKey = apiKey;
 		this.host = host;
 		this.instance = instance;
 	}
 	
+	
 	public boolean login(String username, String password) {
-		AuthenticateRequest request = new AuthenticateRequest(username,password);
-		MakeRequest.makeRequest("/Auth/Authenticate", request, this);
+		AuthenticateRequest request = new AuthenticateRequest(username,password,this.instance);
+		try {
+			HttpResponse response = MakeRequest.makeRequest("https://"+ this.host + "/" + this.instance + 
+					"/" + this.webAPIRoot + MakeRequest.modifyURLPath("/Auth/Authenticate"), request, this);
+			AuthenticateResponse authResp = MakeRequest.convertToResponseObject(response, AuthenticateResponse.class);
+			if(authResp.internalCode == 0) {
+				//Get the header
+				this.cookie = response.getFirstHeader("Set-Cookie") == null ? "" : 
+                    response.getFirstHeader("Set-Cookie").toString();
+				this.authenticated = true;
+			}else {
+				//TODO Throw an error of some sort
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
+
 	
 }
 

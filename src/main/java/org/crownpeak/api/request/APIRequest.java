@@ -1,4 +1,4 @@
-package org.crownpeak.api;
+package org.crownpeak.api.request;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
