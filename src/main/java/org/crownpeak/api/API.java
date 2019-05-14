@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 
 import org.apache.http.HttpResponse;
 import org.crownpeak.api.request.AuthenticateRequest;
-import org.crownpeak.api.response.AuthenticateResponse;
 
 /**
  * API Class required to perform any actions
@@ -32,8 +31,7 @@ public class API extends APIData{
 		try {
 			HttpResponse response = MakeRequest.makeRequest("https://"+ this.host + "/" + this.instance + 
 					"/" + this.webAPIRoot + MakeRequest.modifyURLPath("/Auth/Authenticate"), request, this);
-			AuthenticateResponse authResp = MakeRequest.convertToResponseObject(response, AuthenticateResponse.class);
-			if(authResp.internalCode == 0) {
+			if(response.getStatusLine().getStatusCode() == Util.StatusCode.SUCCESS.value()) {
 				//Get the header
 				this.cookie = response.getFirstHeader("Set-Cookie") == null ? "" : 
                     response.getFirstHeader("Set-Cookie").toString();

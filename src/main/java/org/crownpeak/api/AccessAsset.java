@@ -1,7 +1,9 @@
 package org.crownpeak.api;
 
+import org.crownpeak.api.request.AssetCreateRequest;
 import org.crownpeak.api.request.ExistsRequest;
-import org.crownpeak.api.response.ExistsResponse;
+import org.crownpeak.api.response.AssetCreateResponse;
+import org.crownpeak.api.response.AssetExistsResponse;
 
 public class AccessAsset {
 
@@ -12,12 +14,21 @@ public class AccessAsset {
 	}
 	
 	/**
+	 * Create a new asset in the cms
+	 * @param request - The request containing information about the asset
+	 * @return
+	 */
+	public AssetCreateResponse create(AssetCreateRequest request) {
+		return MakeRequest.makeRequest("/Asset/Create/", request, api,AssetCreateResponse.class);
+	}
+	
+	/**
 	 * 
 	 * @param request - The request object containing the path/id to check
 	 * @return - requestResponse
 	 */
-	public ExistsResponse Exists(ExistsRequest request) {
-		return MakeRequest.makeRequest("/Asset/Exists/", request, this.api,ExistsResponse.class);
+	public AssetExistsResponse exists(ExistsRequest request) {
+		return MakeRequest.makeRequest("/Asset/Exists/", request, this.api,AssetExistsResponse.class);
 	}
 	
 	/**
@@ -25,8 +36,8 @@ public class AccessAsset {
 	 * @param id - The id of the asset to check if it exists
 	 * @return - requestResponse 
 	 */
-	public ExistsResponse Exists(Integer id) {
-		return Exists(new ExistsRequest(id));
+	public AssetExistsResponse exists(Integer id) {
+		return exists(new ExistsRequest(id));
 	}
 	
 	/**
@@ -34,8 +45,12 @@ public class AccessAsset {
 	 * @param path - The path of the asset id to check
 	 * @return - requestResponse
 	 */
-	public ExistsResponse Exists(String path) {
-		return Exists(new ExistsRequest(path));
+	public AssetExistsResponse exists(String path) {
+		return exists(new ExistsRequest(path));
 	}
+	
+	
+	
+	
 	
 }

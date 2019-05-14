@@ -8,5 +8,6 @@ public class APIResponse {
 	public String Message;
 	public String ExceptionMessage;
 	public String ExceptionType;
+	public int statusCode;
 	
 }
