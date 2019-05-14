@@ -1,5 +1,7 @@
 package org.crownpeak.api;
 
+import org.apache.http.impl.client.CloseableHttpClient;
+
 public class APIData {
 
 	public String host;
@@ -8,6 +10,7 @@ public class APIData {
 	public Boolean authenticated;
 	public String cookie;
 	public final String webAPIRoot = "/cpt_webservice/accessapi/";
+	public CloseableHttpClient client;
 	
 	public APIData() {
 		this.host ="";
@@ -15,6 +18,7 @@ public class APIData {
 		this.apiKey = "";
 		this.authenticated = false;
 		this.cookie = "";
+		this.client = null;
 	}
 	
 	public Boolean isAuthenticated() {

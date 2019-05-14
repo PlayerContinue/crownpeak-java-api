@@ -1,7 +1,9 @@
 package org.crownpeak.api.response;
 
 public class AssetResponse {
+	public String dataFilter;
 	public String fullPath;
+	public int idPath;
 	public String iconType;
 	public boolean isFlagged;
 	public int iconTypeValue;
@@ -40,27 +42,33 @@ public class AssetResponse {
 	public int child_id;
 	public int base_model_id;
 	public int model_id;
+	public String model_name;
 	public int deploy_id;
 	public boolean is_deleted;
 	public boolean is_hidden;
 	public String publish_date;
+	public String publish_dependencies_date;
 	public int publish_user_id;
 	public int template_language;
 	public int subtype;
 	public String statusName;
 	public String statusColor;
 	public int ownedBy;
-	public int createdBy;
-	public int modifiedBy;
-	public int lastPublishedBy;
-	public int statusChangedBy;
-	public int changedBy;
-	public int checkedOutBy;
-	public int templateSubType;
+	public String createdBy;
+	public String modifiedBy;
+	public String lastPublishedBy;
+	public String statusChangedBy;
+	public String changedBy;
+	public String checkedOutBy;
+	public String templateSubType;
 	public boolean isQueued;
 	public boolean hasPeriodicSchedule;
 	public boolean hasWorkflowSchedule;
 	public boolean approvedWorkflowFilters;
+	public int template_version_id;
+	public int extraId;
+	
+	
 	
 	AssetResponse(){
 		

@@ -32,9 +32,6 @@ public class API extends APIData{
 			HttpResponse response = MakeRequest.makeRequest("https://"+ this.host + "/" + this.instance + 
 					"/" + this.webAPIRoot + MakeRequest.modifyURLPath("/Auth/Authenticate"), request, this);
 			if(response.getStatusLine().getStatusCode() == Util.StatusCode.SUCCESS.value()) {
-				//Get the header
-				this.cookie = response.getFirstHeader("Set-Cookie") == null ? "" : 
-                    response.getFirstHeader("Set-Cookie").toString();
 				this.authenticated = true;
 			}else {
 				//TODO Throw an error of some sort
