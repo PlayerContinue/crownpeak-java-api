@@ -1,10 +1,12 @@
 package org.crownpeak.api;
 
 import org.crownpeak.api.request.APIRequest;
+import org.crownpeak.api.request.AssetAttachRequest;
 import org.crownpeak.api.request.AssetCreateRequest;
 import org.crownpeak.api.request.AssetDeleteRequest;
 import org.crownpeak.api.request.AssetUpdateRequest;
 import org.crownpeak.api.request.ExistsRequest;
+import org.crownpeak.api.response.AssetAttachResponse;
 import org.crownpeak.api.response.AssetBranchResponse;
 import org.crownpeak.api.response.AssetCreateResponse;
 import org.crownpeak.api.response.AssetDeleteResponse;
@@ -28,8 +30,22 @@ public class AccessAsset {
 		this.api = api;
 	}
 	
+	/**
+	 * Attach an binary file to an asset
+	 * @param request - The request to attach an asset
+	 * @return
+	 */
+	public AssetAttachResponse Attach(AssetAttachRequest request) {
+		return MakeRequest.makeRequest("/Asset/Attach/", request, api,AssetAttachResponse.class);
+	}
+	
+	/**
+	 * Branch an asset in the cms
+	 * @param id - The Id of the asset to branch
+	 * @return
+	 */
 	public AssetBranchResponse branch(int id) {
-		return MakeRequest.makeRequest("/Asset/Branch/", new APIRequest(), api,AssetBranchResponse.class);
+		return MakeRequest.makeRequest("/Asset/Branch/" + id, new APIRequest(), api,AssetBranchResponse.class);
 	}
 	
 	/**

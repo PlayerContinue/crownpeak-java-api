@@ -50,6 +50,16 @@ public class APITest extends TestCase {
 		assertEquals((boolean) true, (boolean) api.isAuthenticated());
 	}
 	
+	public void AttachTest() throws Exception{
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
+		AssetAttachRequest request = new AssetAttachRequest();
+		AssetAttachResponse response = asset.Attach()
+		asset.delete(createResponse.asset.id);
+		
+	}
+	
 	public void BranchTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
@@ -60,7 +70,6 @@ public class APITest extends TestCase {
 		if(branchResponse.asset.branchId != createResponse.asset.id) {
 			fail("Branch Id doesn't match asset ID");
 		}
-		asset.delete(createResponse.asset.id);
 	}
 
 	public void ExistsTest() throws Exception {
@@ -108,6 +117,7 @@ public class APITest extends TestCase {
 		fields.put("test", "test");
 		fields.put("test2","test2");
 		AssetUpdateRequest request = new AssetUpdateRequest(createResponse.asset.id, fields);
+		@SuppressWarnings("unused")
 		AssetUpdateResponse updateResponse = asset.update(request);
 		AssetReadResponse response = asset.read(createResponse.asset.id);
 		if(response.fields.length < 2) {
