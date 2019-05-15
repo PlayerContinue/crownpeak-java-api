@@ -2,6 +2,7 @@ package org.crownpeak.api;
 
 import org.crownpeak.api.request.APIRequest;
 import org.crownpeak.api.response.WorkflowReadResponse;
+import org.crownpeak.api.response.WorkflowsReadResponse;
 
 public class AccessWorkflow {
 
@@ -21,6 +22,10 @@ public class AccessWorkflow {
 	
 	public WorkflowReadResponse read(int id) {
 		return MakeRequest.makeRequest("/Workflow/Read/" + id, new APIRequest(), api,WorkflowReadResponse.class);
+	}
+	
+	public WorkflowsReadResponse read() {
+		return MakeRequest.makeRequest("/Workflow/Read/", new APIRequest(), api,WorkflowsReadResponse.class);
 	}
 	
 }

@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -12,22 +15,33 @@ import javax.imageio.ImageIO;
 
 import org.crownpeak.api.request.AssetAttachRequest;
 import org.crownpeak.api.request.AssetCreateRequest;
+import org.crownpeak.api.request.AssetExecuteWorkflowCommandRequest;
 import org.crownpeak.api.request.AssetMoveRequest;
 import org.crownpeak.api.request.AssetPagedRequest;
+import org.crownpeak.api.request.AssetPublishRefreshRequest;
 import org.crownpeak.api.request.AssetPublishRequest;
 import org.crownpeak.api.request.AssetUpdateRequest;
+import org.crownpeak.api.request.AssetUploadRequest;
 import org.crownpeak.api.request.OrderType;
 import org.crownpeak.api.request.VisibilityType;
 import org.crownpeak.api.response.AssetAttachResponse;
 import org.crownpeak.api.response.AssetBranchResponse;
 import org.crownpeak.api.response.AssetCreateResponse;
+import org.crownpeak.api.response.AssetExecuteWorkflowCommandResponse;
 import org.crownpeak.api.response.AssetExistsResponse;
+import org.crownpeak.api.response.AssetFieldsResponse;
 import org.crownpeak.api.response.AssetMoveResponse;
 import org.crownpeak.api.response.AssetPagedResponse;
+import org.crownpeak.api.response.AssetPublishRefreshResponse;
 import org.crownpeak.api.response.AssetPublishResponse;
 import org.crownpeak.api.response.AssetReadResponse;
+import org.crownpeak.api.response.AssetRenameResponse;
+import org.crownpeak.api.response.AssetRouteResponse;
+import org.crownpeak.api.response.AssetUndeleteResponse;
 import org.crownpeak.api.response.AssetUpdateResponse;
+import org.crownpeak.api.response.AssetUploadResponse;
 import org.crownpeak.api.response.WorkflowReadResponse;
+import org.crownpeak.api.response.WorkflowsReadResponse;
 
 import junit.framework.TestCase;
 
@@ -75,7 +89,7 @@ public class APITest extends TestCase {
 		ImageIO.write(image, "png", outputStream);
 		AssetAttachRequest request = new AssetAttachRequest(createResponse.asset.id, outputStream.toByteArray(),
 				"test");
-		AssetAttachResponse response = asset.Attach(request);
+		AssetAttachResponse response = asset.attach(request);
 		asset.delete(createResponse.asset.id);
 		if (!response.isSuccessful()) {
 			fail("Attach failed");
@@ -110,6 +124,31 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 		APITestHelpers.TestNotExists(createResponse.asset.fullPath, asset);
 	}
+	
+	public void ExecuteWorkflowCommandTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AccessWorkflow workflow = new AccessWorkflow(api);
+		WorkflowsReadResponse workflowresponse = workflow.read();
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
+		int workflowId = createResponse.asset.workflow_id;
+		if(workflowId != 15) {
+			asset.delete(createResponse.asset.id);
+			fail("Asset has wrong workflow");
+		}
+		
+		AssetExecuteWorkflowCommandRequest request = new AssetExecuteWorkflowCommandRequest(createResponse.asset.id,57,false);
+		AssetExecuteWorkflowCommandResponse response = asset.executeWorkflowCommand(request);
+		AssetReadResponse readResponse = asset.read(createResponse.asset.id);
+		
+		asset.delete(createResponse.asset.id);
+		
+		if(readResponse.asset.status != 783) {
+			fail("Asset was not moved through workflow " + readResponse.asset.status);
+		}
+		
+		
+	}
 
 	public void ExistsTest() throws Exception {
 		API api = Authenticate();
@@ -119,6 +158,19 @@ public class APITest extends TestCase {
 
 	}
 
+	public void FieldTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsReadAsset", asset, true);
+		AssetFieldsResponse response = asset.fields(createResponse.asset.id);
+		asset.delete(createResponse.asset.id);
+		String fieldName = response.fields[0].name;
+		if (response.fields.length == 0 || !fieldName.contentEquals("body")) {
+			fail("Body was not correct");
+		}
+	}
+	
+	
 	public void MoveTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
@@ -173,24 +225,71 @@ public class APITest extends TestCase {
 			fail("Publishing was not successful");
 		}
 	}
+	
+	public void PublishRefreshTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("PublishRefreshTest", asset, false);
+		AssetPublishRefreshResponse response = asset.publishRefresh(new AssetPublishRefreshRequest(new int[] {17633},783,true));
+		asset.delete(createResponse.asset.id);
+		if(!response.isSuccessful()) {
+			fail("Refresh failed");
+		}
+	}
 
+	
 	public void ReadTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
-		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsReadAsset", asset, true);
-		AssetReadResponse response = asset.read(createResponse.asset.id);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("ReadTestAsset", asset, true);
+		AssetReadResponse readResponse = asset.read(createResponse.asset.id);
 		asset.delete(createResponse.asset.id);
-		String fieldName = response.fields[0].name;
-		if (response.fields.length == 0 || !fieldName.contentEquals("body")) {
-			fail("Body was not correct");
+		
+		if(!readResponse.asset.label.contentEquals("ReadTestAsset")) {
+			fail("Asset was not read successfully");
 		}
 	}
+	
+	public void RenameTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("RenameTestAsset", asset, true);
+		AssetRenameResponse response = asset.rename(createResponse.asset.id, "renameTestAsset2");
+		asset.delete(createResponse.asset.id);
+		
+		if(!response.asset.label.contentEquals("renameTestAsset2")) {
+			fail("Asset not renamed");
+		}
+		
+	}
+	
+	public void RouteTest() throws Exception{
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("RenameTestAsset", asset, false);
+		AssetRouteResponse routeResponse = asset.route(createResponse.asset.id,783);
+		AssetReadResponse readResponse = asset.read(createResponse.asset.id);
+		asset.delete(createResponse.asset.id);
+		if(readResponse.asset.status != 783) {
+			fail("Route Failed");
+		}
+	}
+	
 	
 	public void WorkflowReadTest() throws Exception{
 		API api = Authenticate();
 		AccessWorkflow workflow = new AccessWorkflow(api);
 		WorkflowReadResponse response = workflow.read(11);
 		if(response.workflow.name == "Basic Workflow") {
+			fail("Correct Workflow was not recieved");
+		}
+	}
+	
+	public void WorkflowsReadTest() throws Exception{
+		API api = Authenticate();
+		AccessWorkflow workflow = new AccessWorkflow(api);
+		WorkflowsReadResponse response = workflow.read();
+		if(response.workflows.get("11").name == "Basic Workflow") {
 			fail("Correct Workflow was not recieved");
 		}
 	}
@@ -205,7 +304,7 @@ public class APITest extends TestCase {
 		AssetUpdateRequest request = new AssetUpdateRequest(createResponse.asset.id, fields);
 		@SuppressWarnings("unused")
 		AssetUpdateResponse updateResponse = asset.update(request);
-		AssetReadResponse response = asset.read(createResponse.asset.id);
+		AssetFieldsResponse response = asset.fields(createResponse.asset.id);
 		if (response.fields.length < 2) {
 			asset.delete(createResponse.asset.id);
 			fail("New values not added");
@@ -223,7 +322,7 @@ public class APITest extends TestCase {
 		request.fieldsToDelete.add("test2");
 
 		updateResponse = asset.update(request);
-		response = asset.read(createResponse.asset.id);
+		response = asset.fields(createResponse.asset.id);
 		for (int i = 0; i < response.fields.length; i++) {
 			if (fields.containsKey(response.fields[i].name)) {
 				asset.delete(createResponse.asset.id);
@@ -233,36 +332,71 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 
 	}
+	
+	public void UndeleteTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsUpdateAsset", asset, true);
+		asset.delete(createResponse.asset.id);
+		AssetUndeleteResponse response = asset.undelete(createResponse.asset.id);
+		if(!response.isSuccessful()) {
+			fail("Undelete uncessful");
+		}
+		
+		AssetReadResponse readResponse = asset.read(createResponse.asset.id);
+		asset.delete(createResponse.asset.id);
+		if(readResponse.asset.is_deleted == true) {
+			fail("Asset was not undeleted");
+		}
+	}
+	
+	public void UploadTest() throws Exception{
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		Path fileLocation = Paths.get(
+				"D:\\Documents\\GitHub\\CP\\Java API\\Maven API\\crownpeak-java-api\\test-folder\\gravity.png");
+		byte[] data = Files.readAllBytes(fileLocation);
+		AssetUploadResponse uploadResponse = asset.upload(new AssetUploadRequest(data,17663,"UploadTest.png"));
+		APITestHelpers.TestExists(uploadResponse.asset.id,asset);
+		asset.delete(uploadResponse.asset.id);
+		
+		
+	}
 }
 
 class APITestHelpers extends TestCase {
 	public static void TestNotExists(String path, AccessAsset asset) {
 		AssetExistsResponse response = asset.exists(path);
-		assertExists(response, false);
+		assertExists(response, false, asset);
 	}
 
 	public static void TestNotExists(int path, AccessAsset asset) {
 		AssetExistsResponse response = asset.exists(path);
-		assertExists(response, false);
+		assertExists(response, false, asset);
 	}
 
 	public static void TestExists(String path, AccessAsset asset) {
 
 		AssetExistsResponse response = asset.exists(path);
-		assertExists(response, true);
+		assertExists(response, true, asset);
 	}
 
 	public static void TestExists(int id, AccessAsset asset) {
 
 		AssetExistsResponse response = asset.exists(id);
-		assertExists(response, true);
+		assertExists(response, true,asset);
 	}
 
-	public static void assertExists(AssetExistsResponse response, Boolean test) {
+	public static void assertExists(AssetExistsResponse response, Boolean test,AccessAsset asset) {
 		if (response.exists == null) {
+			asset.delete(response.assetId);
 			fail("Exists is Null");
 		}
-		assertEquals((boolean) test, (boolean) response.exists);
+		if(test != response.exists) {
+			asset.delete(response.assetId);
+			fail(test + " does not equal " + response.exists);
+		}
+		
 	}
 
 	public static AssetCreateResponse createFolder(String name, AccessAsset asset, int createLocation) {
