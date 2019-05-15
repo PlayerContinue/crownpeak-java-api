@@ -5,6 +5,8 @@ import org.crownpeak.api.request.AssetAttachRequest;
 import org.crownpeak.api.request.AssetCreateRequest;
 import org.crownpeak.api.request.AssetDeleteRequest;
 import org.crownpeak.api.request.AssetMoveRequest;
+import org.crownpeak.api.request.AssetPagedRequest;
+import org.crownpeak.api.request.AssetPublishRequest;
 import org.crownpeak.api.request.AssetUpdateRequest;
 import org.crownpeak.api.request.ExistsRequest;
 import org.crownpeak.api.response.AssetAttachResponse;
@@ -13,6 +15,8 @@ import org.crownpeak.api.response.AssetCreateResponse;
 import org.crownpeak.api.response.AssetDeleteResponse;
 import org.crownpeak.api.response.AssetExistsResponse;
 import org.crownpeak.api.response.AssetMoveResponse;
+import org.crownpeak.api.response.AssetPagedResponse;
+import org.crownpeak.api.response.AssetPublishResponse;
 import org.crownpeak.api.response.AssetReadResponse;
 import org.crownpeak.api.response.AssetUpdateResponse;
 
@@ -94,9 +98,31 @@ public class AccessAsset {
 	public AssetExistsResponse exists(String path) {
 		return exists(new ExistsRequest(path));
 	}
-	
+	/**
+	 * Move an asset from one folder to another
+	 * @param request - The request to move the asset
+	 * @return
+	 */
 	public AssetMoveResponse move(AssetMoveRequest request) {
 		return MakeRequest.makeRequest("/Asset/Move/",request, api, AssetMoveResponse.class);
+	}
+	
+	/**
+	 * Get a list of assets in a folder
+	 * @param request - The request containing the information desired from the folder
+	 * @return
+	 */
+	public AssetPagedResponse paged(AssetPagedRequest request) {
+		return MakeRequest.makeRequest("/Asset/Paged/", request, api,AssetPagedResponse.class);
+	}
+	
+	/**
+	 * Publish an asset without any workflow
+	 * @param request - The request to publish
+	 * @return
+	 */
+	public AssetPublishResponse publish(AssetPublishRequest request) {
+		return MakeRequest.makeRequest("/Asset/Publish/", request, api,AssetPublishResponse.class);
 	}
 	
 	/**

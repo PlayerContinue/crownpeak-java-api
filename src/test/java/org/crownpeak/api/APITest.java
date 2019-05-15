@@ -10,8 +10,24 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import org.crownpeak.api.request.*;
-import org.crownpeak.api.response.*;
+import org.crownpeak.api.request.AssetAttachRequest;
+import org.crownpeak.api.request.AssetCreateRequest;
+import org.crownpeak.api.request.AssetMoveRequest;
+import org.crownpeak.api.request.AssetPagedRequest;
+import org.crownpeak.api.request.AssetPublishRequest;
+import org.crownpeak.api.request.AssetUpdateRequest;
+import org.crownpeak.api.request.OrderType;
+import org.crownpeak.api.request.VisibilityType;
+import org.crownpeak.api.response.AssetAttachResponse;
+import org.crownpeak.api.response.AssetBranchResponse;
+import org.crownpeak.api.response.AssetCreateResponse;
+import org.crownpeak.api.response.AssetExistsResponse;
+import org.crownpeak.api.response.AssetMoveResponse;
+import org.crownpeak.api.response.AssetPagedResponse;
+import org.crownpeak.api.response.AssetPublishResponse;
+import org.crownpeak.api.response.AssetReadResponse;
+import org.crownpeak.api.response.AssetUpdateResponse;
+import org.crownpeak.api.response.WorkflowReadResponse;
 
 import junit.framework.TestCase;
 
@@ -38,7 +54,7 @@ public class APITest extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		} catch( Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -48,22 +64,24 @@ public class APITest extends TestCase {
 		API api = Authenticate();
 		assertEquals((boolean) true, (boolean) api.isAuthenticated());
 	}
-	
-	public void AttachTest() throws Exception{
+
+	public void AttachTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
-		BufferedImage image = ImageIO.read(new File("D:\\Documents\\GitHub\\CP\\Java API\\Maven API\\crownpeak-java-api\\test-folder\\gravity.png"));
+		BufferedImage image = ImageIO.read(new File(
+				"D:\\Documents\\GitHub\\CP\\Java API\\Maven API\\crownpeak-java-api\\test-folder\\gravity.png"));
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ImageIO.write(image, "png", outputStream);
-		AssetAttachRequest request = new AssetAttachRequest(createResponse.asset.id,outputStream.toByteArray(),"test");
+		AssetAttachRequest request = new AssetAttachRequest(createResponse.asset.id, outputStream.toByteArray(),
+				"test");
 		AssetAttachResponse response = asset.Attach(request);
 		asset.delete(createResponse.asset.id);
-		if(!response.isSuccessful()) {
+		if (!response.isSuccessful()) {
 			fail("Attach failed");
-		}	
+		}
 	}
-	
+
 	public void BranchTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
@@ -71,12 +89,10 @@ public class APITest extends TestCase {
 		AssetBranchResponse branchResponse = asset.branch(createResponse.asset.id);
 		asset.delete(createResponse.asset.id);
 		asset.delete(branchResponse.asset.id);
-		if(branchResponse.asset.branchId != createResponse.asset.id) {
+		if (branchResponse.asset.branchId != createResponse.asset.id) {
 			fail("Branch Id doesn't match asset ID");
 		}
 	}
-
-	
 
 	public void CreateTest() throws Exception {
 		API api = Authenticate();
@@ -87,7 +103,6 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 	}
 
-	
 	public void DeleteTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
@@ -95,7 +110,7 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 		APITestHelpers.TestNotExists(createResponse.asset.fullPath, asset);
 	}
-	
+
 	public void ExistsTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
@@ -103,26 +118,60 @@ public class APITest extends TestCase {
 		APITestHelpers.TestExists(17663, asset);
 
 	}
-	
+
 	public void MoveTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
-		AssetCreateResponse folderResponse = APITestHelpers.createFolder("AttachFolder",asset);
-		AssetMoveResponse moveResponse = asset.move(new AssetMoveRequest(createResponse.asset.id,folderResponse.asset.id));
+		AssetCreateResponse folderResponse = APITestHelpers.createFolder("AttachFolder", asset);
+		AssetMoveResponse moveResponse = asset
+				.move(new AssetMoveRequest(createResponse.asset.id, folderResponse.asset.id));
 		AssetExistsResponse existsResponse = asset.exists("/David Test/AttachFolder/AttachTest");
 		asset.delete(createResponse.asset.id);
 		asset.delete(folderResponse.asset.id);
-		
-		if(existsResponse.isSuccessful() && !existsResponse.exists) {
+
+		if (existsResponse.isSuccessful() && !existsResponse.exists) {
 			fail("Asset moved from failure");
 		}
-		
-		if(!moveResponse.isSuccessful()) {
+
+		if (!moveResponse.isSuccessful()) {
 			fail("Move failed");
+		}
+
+	}
+	
+	public void PagedTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("PagedAsset1", asset, true);
+		AssetCreateResponse createResponse2 = APITestHelpers.createTemps("PagedAsset2", asset, true);
+		AssetCreateResponse createResponse3 = APITestHelpers.createTemps("PagedAsset3", asset, true);
+		
+		AssetPagedResponse pagedResponse = asset.paged(new AssetPagedRequest(17663, -1, 0, false, false, OrderType.ASCENDING, 10,
+				false, "", VisibilityType.NORMAL));
+		
+		asset.delete(createResponse.asset.id);
+		asset.delete(createResponse2.asset.id);
+		asset.delete(createResponse3.asset.id);
+		
+		if(!pagedResponse.isSuccessful() && pagedResponse.assets.length != 3) {
+			fail("Asset count did not match");
 		}
 		
 		
+	}
+	
+	
+
+	public void PublishTest() throws Exception {
+		API api = Authenticate();
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("PublishTest", asset, true, 18214);
+		AssetPublishResponse publishResponse = asset.publish(new AssetPublishRequest(new int[] { createResponse.asset.id }, false));
+		asset.delete(createResponse.asset.id);
+		if (!publishResponse.isSuccessful() || publishResponse.publishingSessionId <= 0) {
+			fail("Publishing was not successful");
+		}
 	}
 
 	public void ReadTest() throws Exception {
@@ -136,6 +185,15 @@ public class APITest extends TestCase {
 			fail("Body was not correct");
 		}
 	}
+	
+	public void WorkflowReadTest() throws Exception{
+		API api = Authenticate();
+		AccessWorkflow workflow = new AccessWorkflow(api);
+		WorkflowReadResponse response = workflow.read(11);
+		if(response.workflow.name == "Basic Workflow") {
+			fail("Correct Workflow was not recieved");
+		}
+	}
 
 	public void UpdateTest() throws Exception {
 		API api = Authenticate();
@@ -143,38 +201,37 @@ public class APITest extends TestCase {
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsUpdateAsset", asset, true);
 		HashMap<String, String> fields = new HashMap<String, String>();
 		fields.put("test", "test");
-		fields.put("test2","test2");
+		fields.put("test2", "test2");
 		AssetUpdateRequest request = new AssetUpdateRequest(createResponse.asset.id, fields);
 		@SuppressWarnings("unused")
 		AssetUpdateResponse updateResponse = asset.update(request);
 		AssetReadResponse response = asset.read(createResponse.asset.id);
-		if(response.fields.length < 2) {
+		if (response.fields.length < 2) {
 			asset.delete(createResponse.asset.id);
 			fail("New values not added");
 		}
-		for(int i=0; i< response.fields.length;i++) {
-			if(!fields.containsKey(response.fields[i].name)) {
+		for (int i = 0; i < response.fields.length; i++) {
+			if (!fields.containsKey(response.fields[i].name)) {
 				asset.delete(createResponse.asset.id);
 				fail("One of the fields does not exist: " + response.fields[i].name);
 			}
 		}
-		
+
 		request.fields = null;
 		request.fieldsToDelete = new ArrayList<String>();
 		request.fieldsToDelete.add("test");
 		request.fieldsToDelete.add("test2");
-		
+
 		updateResponse = asset.update(request);
 		response = asset.read(createResponse.asset.id);
-		for(int i=0; i< response.fields.length;i++) {
-			if(fields.containsKey(response.fields[i].name)) {
+		for (int i = 0; i < response.fields.length; i++) {
+			if (fields.containsKey(response.fields[i].name)) {
 				asset.delete(createResponse.asset.id);
 				fail("One of the deleted fields exist: " + response.fields[i].name);
 			}
 		}
 		asset.delete(createResponse.asset.id);
-		
-		
+
 	}
 }
 
@@ -208,32 +265,53 @@ class APITestHelpers extends TestCase {
 		assertEquals((boolean) test, (boolean) response.exists);
 	}
 
-	public static AssetCreateResponse createFolder(String name, AccessAsset asset) {
+	public static AssetCreateResponse createFolder(String name, AccessAsset asset, int createLocation) {
 		AssetCreateRequest request = new AssetCreateRequest();
-		request.createFolder(name, 17663);
+		if (createLocation <= 0) {
+			createLocation = 17663;
+		}
+		request.createFolder(name, createLocation);
 		AssetCreateResponse response = asset.create(request);
 		if (response.asset == null) {
 			fail("Folder was not created successfully" + response.errorMessage);
 		}
-		APITestHelpers.TestExists("/David Test/" + name, asset);
+		if (createLocation == 17663) {
+			APITestHelpers.TestExists("/David Test/" + name, asset);
+		}
 		return response;
 	}
-	
-	public static AssetCreateResponse createTemps(String name, AccessAsset asset, Boolean developerTemplate) {
+
+	public static AssetCreateResponse createFolder(String name, AccessAsset asset) {
+		return createFolder(name, asset, -1);
+	}
+
+	public static AssetCreateResponse createTemps(String name, AccessAsset asset, Boolean developerTemplate,
+			int createLocation) {
 		AssetCreateRequest request;
+		if (createLocation < 0) {
+			createLocation = 17663;
+
+		}
+
 		if (!developerTemplate) {
-			request = new AssetCreateRequest(name, 17663, 801);
+			request = new AssetCreateRequest(name, createLocation, 801);
 		} else {
 			request = new AssetCreateRequest();
-			request.createDevAsset(name, 17663);
+			request.createDevAsset(name, createLocation);
 		}
 
 		AssetCreateResponse response = asset.create(request);
 		if (response.asset == null) {
 			fail("Asset was not created successfully" + response.errorMessage);
 		}
-		APITestHelpers.TestExists("/David Test/" + name, asset);
+		if (createLocation == 17663) {
+			APITestHelpers.TestExists("/David Test/" + name, asset);
+		}
 		return response;
+	}
+
+	public static AssetCreateResponse createTemps(String name, AccessAsset asset, Boolean developerTemplate) {
+		return createTemps(name, asset, developerTemplate, -1);
 	}
 
 }
