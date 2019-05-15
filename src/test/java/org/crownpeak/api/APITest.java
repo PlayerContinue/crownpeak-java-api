@@ -30,6 +30,7 @@ import org.crownpeak.api.response.AssetCreateResponse;
 import org.crownpeak.api.response.AssetExecuteWorkflowCommandResponse;
 import org.crownpeak.api.response.AssetExistsResponse;
 import org.crownpeak.api.response.AssetFieldsResponse;
+import org.crownpeak.api.response.AssetLogResponse;
 import org.crownpeak.api.response.AssetMoveResponse;
 import org.crownpeak.api.response.AssetPagedResponse;
 import org.crownpeak.api.response.AssetPublishRefreshResponse;
@@ -362,7 +363,25 @@ public class APITest extends TestCase {
 		
 		
 	}
+	
+	public void LogTest() throws Exception {
+		API api = Authenticate();
+		AccessUtil util = new AccessUtil(api);
+		AssetLogResponse response = util.log("test");
+		if(!response.isSuccessful()) {
+			fail("Message failed");
+		}
+		AccessAsset asset = new AccessAsset(api);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("LogAsset", asset, true);
+		response = util.log(createResponse.asset.id,"test");
+		asset.delete(createResponse.asset.id);
+		if(!response.isSuccessful()) {
+			fail("Asset Message Fail");
+		}
+	}
 }
+
+
 
 class APITestHelpers extends TestCase {
 	public static void TestNotExists(String path, AccessAsset asset) {
