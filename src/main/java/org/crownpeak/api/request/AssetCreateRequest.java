@@ -77,6 +77,11 @@ public class AssetCreateRequest extends APIRequest {
 		this.type = Util.AssetTypes.FILE.value();
 	}
 	
+	public void createFolder(String newName, int destinationFolderId) {
+		this.newName = newName;
+		this.destinationFolderId = destinationFolderId;
+		this.type = Util.AssetTypes.FOLDER.value(); 
+	}
 	
 	
 	/**

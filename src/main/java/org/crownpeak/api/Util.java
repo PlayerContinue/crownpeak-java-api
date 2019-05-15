@@ -40,4 +40,17 @@ public final class Util {
 		}
 	}
 	
+	public enum ResultCode{
+		SUCCESS ("conWS_Success");
+		
+		private String resultCode;
+		public String value() {
+			return this.resultCode;
+		}
+		
+		private ResultCode(String resultCode) {
+			this.resultCode = resultCode;
+		}
+	}
+	
 }

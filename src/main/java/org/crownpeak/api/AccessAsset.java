@@ -4,6 +4,7 @@ import org.crownpeak.api.request.APIRequest;
 import org.crownpeak.api.request.AssetAttachRequest;
 import org.crownpeak.api.request.AssetCreateRequest;
 import org.crownpeak.api.request.AssetDeleteRequest;
+import org.crownpeak.api.request.AssetMoveRequest;
 import org.crownpeak.api.request.AssetUpdateRequest;
 import org.crownpeak.api.request.ExistsRequest;
 import org.crownpeak.api.response.AssetAttachResponse;
@@ -11,6 +12,7 @@ import org.crownpeak.api.response.AssetBranchResponse;
 import org.crownpeak.api.response.AssetCreateResponse;
 import org.crownpeak.api.response.AssetDeleteResponse;
 import org.crownpeak.api.response.AssetExistsResponse;
+import org.crownpeak.api.response.AssetMoveResponse;
 import org.crownpeak.api.response.AssetReadResponse;
 import org.crownpeak.api.response.AssetUpdateResponse;
 
@@ -93,10 +95,24 @@ public class AccessAsset {
 		return exists(new ExistsRequest(path));
 	}
 	
+	public AssetMoveResponse move(AssetMoveRequest request) {
+		return MakeRequest.makeRequest("/Asset/Move/",request, api, AssetMoveResponse.class);
+	}
+	
+	/**
+	 * Read all fields from an asset
+	 * @param id - The id of the asset to read
+	 * @return
+	 */
 	public AssetReadResponse read(int id) {
 		return MakeRequest.makeRequest("/Asset/Fields/" + id, new APIRequest(), api,AssetReadResponse.class);
 	}
 	
+	/**
+	 * Update the fields of an asset
+	 * @param request - The request containing what do delete and add to the asset
+	 * @return
+	 */
 	public AssetUpdateResponse update(AssetUpdateRequest request) {
 		return MakeRequest.makeRequest("/Asset/Update", request, api, AssetUpdateResponse.class);
 	}
