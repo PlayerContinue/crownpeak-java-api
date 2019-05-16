@@ -41,13 +41,15 @@ import org.crownpeak.api.response.AssetRouteResponse;
 import org.crownpeak.api.response.AssetUndeleteResponse;
 import org.crownpeak.api.response.AssetUpdateResponse;
 import org.crownpeak.api.response.AssetUploadResponse;
+import org.crownpeak.api.response.ReportSiteSummaryReportDataResponse;
 import org.crownpeak.api.response.WorkflowReadResponse;
 import org.crownpeak.api.response.WorkflowsReadResponse;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
 public class APITest extends TestCase {
-
+	@Test
 	public static API Authenticate() {
 		System.setProperty("DproxySet", "true");
 		System.setProperty("DproxyHost", "127.0.0.1");
@@ -74,13 +76,13 @@ public class APITest extends TestCase {
 			return null;
 		}
 	}
-
-	public void AuthenticateTest() {
+	@Test
+	public void testAuthenticateTest() {
 		API api = Authenticate();
 		assertEquals((boolean) true, (boolean) api.isAuthenticated());
 	}
-
-	public void AttachTest() throws Exception {
+	@Test
+	public void testAttachTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
@@ -96,8 +98,8 @@ public class APITest extends TestCase {
 			fail("Attach failed");
 		}
 	}
-
-	public void BranchTest() throws Exception {
+	@Test
+	public void testBranchTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("BranchTest", asset, false);
@@ -108,8 +110,8 @@ public class APITest extends TestCase {
 			fail("Branch Id doesn't match asset ID");
 		}
 	}
-
-	public void CreateTest() throws Exception {
+	@Test
+	public void testCreateTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("CreateAsset", asset, false);
@@ -117,16 +119,16 @@ public class APITest extends TestCase {
 		createResponse = APITestHelpers.createTemps("CreateAsset", asset, true);
 		asset.delete(createResponse.asset.id);
 	}
-
-	public void DeleteTest() throws Exception {
+	@Test
+	public void testDeleteTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("DeleteAsset", asset, true);
 		asset.delete(createResponse.asset.id);
 		APITestHelpers.TestNotExists(createResponse.asset.fullPath, asset);
 	}
-	
-	public void ExecuteWorkflowCommandTest() throws Exception {
+	@Test
+	public void testExecuteWorkflowCommandTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AccessWorkflow workflow = new AccessWorkflow(api);
@@ -150,16 +152,16 @@ public class APITest extends TestCase {
 		
 		
 	}
-
-	public void ExistsTest() throws Exception {
+	@Test
+	public void testExistsTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		APITestHelpers.TestExists("/David Test/", asset);
 		APITestHelpers.TestExists(17663, asset);
 
 	}
-
-	public void FieldTest() throws Exception {
+	@Test
+	public void testFieldTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsReadAsset", asset, true);
@@ -171,8 +173,8 @@ public class APITest extends TestCase {
 		}
 	}
 	
-	
-	public void MoveTest() throws Exception {
+	@Test
+	public void testMoveTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("AttachTest", asset, false);
@@ -192,8 +194,8 @@ public class APITest extends TestCase {
 		}
 
 	}
-	
-	public void PagedTest() throws Exception {
+	@Test
+	public void testPagedTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("PagedAsset1", asset, true);
@@ -215,8 +217,8 @@ public class APITest extends TestCase {
 	}
 	
 	
-
-	public void PublishTest() throws Exception {
+	@Test
+	public void testPublishTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("PublishTest", asset, true, 18214);
@@ -226,8 +228,8 @@ public class APITest extends TestCase {
 			fail("Publishing was not successful");
 		}
 	}
-	
-	public void PublishRefreshTest() throws Exception {
+	@Test
+	public void testPublishRefreshTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("PublishRefreshTest", asset, false);
@@ -238,8 +240,8 @@ public class APITest extends TestCase {
 		}
 	}
 
-	
-	public void ReadTest() throws Exception {
+	@Test
+	public void testReadTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("ReadTestAsset", asset, true);
@@ -250,8 +252,8 @@ public class APITest extends TestCase {
 			fail("Asset was not read successfully");
 		}
 	}
-	
-	public void RenameTest() throws Exception {
+	@Test
+	public void testRenameTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("RenameTestAsset", asset, true);
@@ -263,8 +265,8 @@ public class APITest extends TestCase {
 		}
 		
 	}
-	
-	public void RouteTest() throws Exception{
+	@Test
+	public void testRouteTest() throws Exception{
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("RenameTestAsset", asset, false);
@@ -276,8 +278,8 @@ public class APITest extends TestCase {
 		}
 	}
 	
-	
-	public void WorkflowReadTest() throws Exception{
+	@Test
+	public void testWorkflowReadTest() throws Exception{
 		API api = Authenticate();
 		AccessWorkflow workflow = new AccessWorkflow(api);
 		WorkflowReadResponse response = workflow.read(11);
@@ -285,8 +287,8 @@ public class APITest extends TestCase {
 			fail("Correct Workflow was not recieved");
 		}
 	}
-	
-	public void WorkflowsReadTest() throws Exception{
+	@Test
+	public void testWorkflowsReadTest() throws Exception{
 		API api = Authenticate();
 		AccessWorkflow workflow = new AccessWorkflow(api);
 		WorkflowsReadResponse response = workflow.read();
@@ -294,11 +296,11 @@ public class APITest extends TestCase {
 			fail("Correct Workflow was not recieved");
 		}
 	}
-
-	public void UpdateTest() throws Exception {
+	@Test
+	public void testUpdateTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
-		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsUpdateAsset", asset, true);
+		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsUpdateAsset", asset, false);
 		HashMap<String, String> fields = new HashMap<String, String>();
 		fields.put("test", "test");
 		fields.put("test2", "test2");
@@ -333,8 +335,8 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 
 	}
-	
-	public void UndeleteTest() throws Exception {
+	@Test
+	public void testUndeleteTest() throws Exception {
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		AssetCreateResponse createResponse = APITestHelpers.createTemps("FieldsUpdateAsset", asset, true);
@@ -350,8 +352,8 @@ public class APITest extends TestCase {
 			fail("Asset was not undeleted");
 		}
 	}
-	
-	public void UploadTest() throws Exception{
+	@Test
+	public void testUploadTest() throws Exception{
 		API api = Authenticate();
 		AccessAsset asset = new AccessAsset(api);
 		Path fileLocation = Paths.get(
@@ -363,8 +365,8 @@ public class APITest extends TestCase {
 		
 		
 	}
-	
-	public void LogTest() throws Exception {
+	@Test
+	public void testLogTest() throws Exception {
 		API api = Authenticate();
 		AccessUtil util = new AccessUtil(api);
 		AssetLogResponse response = util.log("test");
@@ -377,6 +379,15 @@ public class APITest extends TestCase {
 		asset.delete(createResponse.asset.id);
 		if(!response.isSuccessful()) {
 			fail("Asset Message Fail");
+		}
+	}
+	@Test
+	public void testAPIReportTest() throws Exception {
+		API api = Authenticate();
+		AccessReport report = new AccessReport(api);
+		ReportSiteSummaryReportDataResponse response = report.siteSummary();
+		if(!response.isSuccessful()) {
+			fail("Report was not successful");
 		}
 	}
 }
