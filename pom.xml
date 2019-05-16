@@ -3,7 +3,7 @@
 
 	<groupId>org.crownpeak.api</groupId>
 	<artifactId>crownpeak-java-api</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>crownpeak-java-api</name>
@@ -16,7 +16,7 @@
 		<connection>scm:git:git://github.com/World93/crownpeak-java-api.git</connection>
 		<developerConnection>scm:git:git@github.com/World93/crownpeak-java-api.git</developerConnection>
 		<url>https://github.com/World93/crownpeak-java-api</url>
-		<tag>crownpeak-java-api-0.0.3</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
