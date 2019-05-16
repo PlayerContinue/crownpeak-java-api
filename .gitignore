@@ -11,7 +11,9 @@
 .mtj.tmp/
 
 #skip Folders
+target/
 test-folder/
+
 
 # Package Files #
 *.jar

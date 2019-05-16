@@ -24,7 +24,6 @@ org\crownpeak\api\response\WorkflowCommandData.class
 org\crownpeak\api\request\OrderType.class
 org\crownpeak\api\request\AssetAttachRequest.class
 org\crownpeak\api\AccessUtil.class
-org\crownpeak\api\crownpeak_java_api\App.class
 org\crownpeak\api\response\AssetExistsResponse.class
 org\crownpeak\api\request\AssetMoveRequest.class
 org\crownpeak\api\response\AssetResponse.class
@@ -44,7 +43,6 @@ org\crownpeak\api\request\AssetPublishRequest.class
 org\crownpeak\api\request\AssetRouteRequest.class
 org\crownpeak\api\response\AssetLogResponse.class
 org\crownpeak\api\response\AssetUpdateResponse.class
-org\crownpeak\api\APICallback.class
 org\crownpeak\api\response\WorkflowReadResponse.class
 org\crownpeak\api\request\AssetCreateRequest.class
 org\crownpeak\api\request\AssetExecuteWorkflowCommandRequest.class

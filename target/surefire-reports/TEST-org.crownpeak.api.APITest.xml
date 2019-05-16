@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="22" failures="0" name="org.crownpeak.api.APITest" time="65.179" errors="0" skipped="0">
+<testsuite tests="22" failures="0" name="org.crownpeak.api.APITest" time="69.855" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="11.0.3+12-LTS"/>
@@ -46,7 +46,7 @@
     <property name="java.class.path" value="D:\Downloads\Programming\java\apache-maven-3.6.1-bin\apache-maven-3.6.1\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -s C:\Users\dgree\AppData\Local\Temp\release-settings1734327950875416767.xml clean verify --no-plugin-updates -Dgpg.passphrase=CrownWorld#1993"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -s C:\Users\dgree\AppData\Local\Temp\release-settings17624872070841070092.xml clean verify --no-plugin-updates -Dgpg.passphrase=CrownWorld#1993"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-11.0.3"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -64,26 +64,26 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="org.crownpeak.api.APITest" name="testRenameTest" time="4.243"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testAPIReportTest" time="0.836"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testPublishRefreshTest" time="1.598"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testPublishTest" time="3.092"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testUpdateTest" time="2.248"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testUploadTest" time="1.904"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testExistsTest" time="1.079"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testReadTest" time="3.387"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testLogTest" time="4.505"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testWorkflowsReadTest" time="4.006"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testAuthenticateTest" time="0.474"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testMoveTest" time="2.496"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testUndeleteTest" time="3.271"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testRenameTest" time="5.2"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testAPIReportTest" time="0.834"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testPublishRefreshTest" time="1.652"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testPublishTest" time="5.234"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testUpdateTest" time="2.308"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testUploadTest" time="1.933"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testExistsTest" time="0.903"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testReadTest" time="3.927"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testLogTest" time="3.933"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testWorkflowsReadTest" time="0.929"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testAuthenticateTest" time="0.435"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testMoveTest" time="2.36"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testUndeleteTest" time="4.53"/>
   <testcase classname="org.crownpeak.api.APITest" name="testBranchTest" time="1.96"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testCreateTest" time="3.928"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testRouteTest" time="2.051"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testDeleteTest" time="3.555"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testPagedTest" time="7.389"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testExecuteWorkflowCommandTest" time="2.477"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testAttachTest" time="6.123"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testWorkflowReadTest" time="1.102"/>
-  <testcase classname="org.crownpeak.api.APITest" name="testFieldTest" time="3.455"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testCreateTest" time="4.481"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testRouteTest" time="1.992"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testDeleteTest" time="4.041"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testPagedTest" time="10.593"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testExecuteWorkflowCommandTest" time="2.449"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testAttachTest" time="5.197"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testWorkflowReadTest" time="1.052"/>
+  <testcase classname="org.crownpeak.api.APITest" name="testFieldTest" time="3.912"/>
 </testsuite>

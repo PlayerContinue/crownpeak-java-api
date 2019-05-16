@@ -24,7 +24,6 @@ D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\c
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AssetExecuteWorkflowCommandResponse.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\request\AssetUpdateRequest.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AssetResponse.java
-D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\APICallback.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AssetUploadResponse.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\request\AuthenticateRequest.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AuthenticateResponse.java
@@ -40,7 +39,6 @@ D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\c
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AssetUpdateResponse.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\AssetPublishResponse.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\request\AssetCreateRequest.java
-D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\crownpeak_java_api\App.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\request\AssetUploadRequest.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\request\OrderType.java
 D:\Documents\GitHub\CP\Java API\Maven API\crownpeak-java-api\src\main\java\org\crownpeak\api\response\ReportData.java

@@ -10,7 +10,19 @@
 	<url>http://maven.apache.org</url>
 	<description>Java function for making calls to the Crownpeak CMS</description>
 
-
+<developers>
+		<developer>
+			<id>dgreenberg</id>
+			<name>David G</name>
+			<email>david.greenberg@crownpeak.com</email>
+			<organization>crownpeak</organization>
+			<organizationUrl>http://www.crownpeak.com</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:git:git://github.com/World93/crownpeak-java-api.git</connection>

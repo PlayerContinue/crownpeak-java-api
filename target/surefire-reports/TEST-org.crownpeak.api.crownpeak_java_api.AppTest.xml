@@ -46,7 +46,7 @@
     <property name="java.class.path" value="D:\Downloads\Programming\java\apache-maven-3.6.1-bin\apache-maven-3.6.1\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -s C:\Users\dgree\AppData\Local\Temp\release-settings1734327950875416767.xml clean verify --no-plugin-updates -Dgpg.passphrase=CrownWorld#1993"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -s C:\Users\dgree\AppData\Local\Temp\release-settings17624872070841070092.xml clean verify --no-plugin-updates -Dgpg.passphrase=CrownWorld#1993"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-11.0.3"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
