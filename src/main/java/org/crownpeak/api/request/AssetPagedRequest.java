@@ -24,7 +24,7 @@ public class AssetPagedRequest extends APIRequest {
      * @param  pageSize - Number of assets to return on each page
      * @param  saveSort - TODO find out
      * @param  sortColumn - TODO find out
-     * @param visibilityType - Display Hidden, Deleted, Or Normal 
+     * @param visibiltyType - Display Hidden, Deleted, Or Normal 
      */
 	public AssetPagedRequest(int assetId, int assetIdToFindPage, int currentPage, boolean ignoreFilter,
 			boolean ignoreSort, OrderType orderType, int pageSize, boolean saveSort, String sortColumn,

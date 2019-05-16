@@ -21,6 +21,10 @@ public class APIData {
 		this.client = null;
 	}
 	
+	/**
+	 * Check if the API is authenticated
+	 * @return - True if authenticated, false otherwise;
+	 */
 	public Boolean isAuthenticated() {
 		return this.authenticated;
 	}

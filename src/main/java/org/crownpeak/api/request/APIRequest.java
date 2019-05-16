@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  */
 public class APIRequest{
 	/**
-	 * Only left in for use as empty shell
+	 * Function for converting APIRequest to java
+	 * @return - The APIRequest as json
+	 * @throws JsonProcessingException - JSON was not formed correctly.
 	 */
 	public String toJSON() throws JsonProcessingException{
 		ObjectMapper mapper = new ObjectMapper();

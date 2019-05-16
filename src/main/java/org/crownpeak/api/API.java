@@ -25,7 +25,12 @@ public class API extends APIData{
 		this.instance = instance;
 	}
 	
-	
+	/**
+	 * Authenticate the API
+	 * @param username - Username for the cms. Authenticate with user who has access to functions and folders editing is desired in.
+	 * @param password - The password for the username
+	 * @return - True if successful, false otherwise
+	 */
 	public boolean login(String username, String password) {
 		AuthenticateRequest request = new AuthenticateRequest(username,password,this.instance);
 		try {
@@ -35,13 +40,16 @@ public class API extends APIData{
 				this.authenticated = true;
 			}else {
 				//TODO Throw an error of some sort
+				return false;
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		return true;
 	}

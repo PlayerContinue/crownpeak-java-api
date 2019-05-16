@@ -4,12 +4,33 @@ import org.crownpeak.api.Util;
 
 public class APIResponse {
 
+	/**
+	 * The result of the call
+	 */
 	public String resultCode = null;
+	/**
+	 * Error message. Blank if none occurred
+	 */
 	public String errorMessage;
+	/**
+	 * Internal code
+	 */
 	public int internalCode;
+	/**
+	 * Any messages from the server
+	 */
 	public String Message;
+	/**
+	 * Exceptions that occurred on the server
+	 */
 	public String ExceptionMessage;
+	/**
+	 * The type of exception that occurred
+	 */
 	public String ExceptionType;
+	/**
+	 * The statusCode
+	 */
 	public int statusCode;
 	
 	/**

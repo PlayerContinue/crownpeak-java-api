@@ -11,7 +11,7 @@ public class AccessWorkflow {
 	/**
 	 * Create an new instance of the object
 	 * @param api - An authenticated api
-	 * @throws Exception 
+	 * @throws Exception - On the API not being authenticated
 	 */
 	public AccessWorkflow(API api) throws Exception {
 		if(!api.isAuthenticated()) {
@@ -20,10 +20,19 @@ public class AccessWorkflow {
 		this.api = api;
 	}
 	
-	public WorkflowReadResponse read(int id) {
-		return MakeRequest.makeRequest("/Workflow/Read/" + id, new APIRequest(), api,WorkflowReadResponse.class);
+	/**
+	 * Retrieve information about a workflow by the id
+	 * @param workflowId - The id of the workflow. 
+	 * @return - Information about the workflow
+	 */
+	public WorkflowReadResponse read(int workflowId) {
+		return MakeRequest.makeRequest("/Workflow/Read/" + workflowId, new APIRequest(), api,WorkflowReadResponse.class);
 	}
 	
+	/**
+	 * Retrieve a list of all workflows in the cms, does not return workflows in projects
+	 * @return - List of all workflows not in projects
+	 */
 	public WorkflowsReadResponse read() {
 		return MakeRequest.makeRequest("/Workflow/Read/", new APIRequest(), api,WorkflowsReadResponse.class);
 	}

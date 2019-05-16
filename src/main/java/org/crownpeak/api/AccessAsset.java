@@ -39,7 +39,7 @@ public class AccessAsset {
 	/**
 	 * Create an new instance of the object
 	 * @param api - An authenticated api
-	 * @throws Exception 
+	 * @throws Exception - Throws error when API is not authenticated
 	 */
 	public AccessAsset(API api) throws Exception {
 		if(!api.isAuthenticated()) {
@@ -51,7 +51,7 @@ public class AccessAsset {
 	/**
 	 * Attach an binary file to an asset
 	 * @param request - The request to attach an asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetAttachResponse attach(AssetAttachRequest request) {
 		return MakeRequest.makeRequest("/Asset/Attach/", request, api,AssetAttachResponse.class);
@@ -60,7 +60,7 @@ public class AccessAsset {
 	/**
 	 * Branch an asset in the cms
 	 * @param id - The Id of the asset to branch
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetBranchResponse branch(int id) {
 		return MakeRequest.makeRequest("/Asset/Branch/" + id, new APIRequest(), api,AssetBranchResponse.class);
@@ -69,7 +69,7 @@ public class AccessAsset {
 	/**
 	 * Create a new asset in the cms
 	 * @param request - The request containing information about the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetCreateResponse create(AssetCreateRequest request) {
 		return MakeRequest.makeRequest("/Asset/Create/", request, api,AssetCreateResponse.class);
@@ -78,12 +78,17 @@ public class AccessAsset {
 	/**
 	 * Delete a requested asset in the cms by id
 	 * @param id - The id of the asset to be deleted
-	 * @return 
+	 * @return - The response from the cms
 	 */
 	public AssetDeleteResponse delete(int id) {
 		return MakeRequest.makeRequest("/Asset/Delete/" + id, new AssetDeleteRequest(), api,AssetDeleteResponse.class);
 	}
 	
+	/**
+	 * Move an asset through workflow
+	 * @param request - The request contaiing information on what to move through workflow
+	 * @return - The response from the cms
+	 */
 	public AssetExecuteWorkflowCommandResponse executeWorkflowCommand(AssetExecuteWorkflowCommandRequest request) {
 		return MakeRequest.makeRequest("/Asset/ExecuteWorkflowCommand/", request, api, AssetExecuteWorkflowCommandResponse.class);
 	}
@@ -118,7 +123,7 @@ public class AccessAsset {
 	/**
 	 * Read all fields from an asset
 	 * @param id - The id of the asset to read
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetFieldsResponse fields(int id) {
 		return MakeRequest.makeRequest("/Asset/Fields/" + id, new APIRequest(), api,AssetFieldsResponse.class);
@@ -127,7 +132,7 @@ public class AccessAsset {
 	/**
 	 * Move an asset from one folder to another
 	 * @param request - The request to move the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetMoveResponse move(AssetMoveRequest request) {
 		return MakeRequest.makeRequest("/Asset/Move/",request, api, AssetMoveResponse.class);
@@ -136,7 +141,7 @@ public class AccessAsset {
 	/**
 	 * Get a list of assets in a folder
 	 * @param request - The request containing the information desired from the folder
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetPagedResponse paged(AssetPagedRequest request) {
 		return MakeRequest.makeRequest("/Asset/Paged/", request, api,AssetPagedResponse.class);
@@ -145,7 +150,7 @@ public class AccessAsset {
 	/**
 	 * Publish an asset without any workflow
 	 * @param request - The request to publish
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetPublishResponse publish(AssetPublishRequest request) {
 		return MakeRequest.makeRequest("/Asset/Publish/", request, api,AssetPublishResponse.class);
@@ -158,7 +163,7 @@ public class AccessAsset {
 	/**
 	 * Get information about an asset by id
 	 * @param id - The id of the asset to get information about
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetReadResponse read(int id) {
 		return MakeRequest.makeRequest("/Asset/Read/" + id,new  APIRequest(), api,AssetReadResponse.class);
@@ -167,7 +172,7 @@ public class AccessAsset {
 	/**
 	 * Rename an asset
 	 * @param request - The request containing information to rename the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetRenameResponse rename(AssetRenameRequest request) {
 		return MakeRequest.makeRequest("/Asset/Rename/", request, api,AssetRenameResponse.class);
@@ -177,7 +182,7 @@ public class AccessAsset {
 	 * Rename an Asset
 	 * @param assetId - The id of the asset to rename
 	 * @param newName - The desired new name of the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetRenameResponse rename(int assetId, String newName) {
 		return rename(new AssetRenameRequest(assetId, newName));
@@ -186,7 +191,7 @@ public class AccessAsset {
 	/**
 	 * Route an asset to a different state
 	 * @param request - The request containing information on routing the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetRouteResponse route(AssetRouteRequest request) {
 		return MakeRequest.makeRequest("/Asset/Route", request, api,AssetRouteResponse.class);
@@ -196,6 +201,7 @@ public class AccessAsset {
 	 * Route an asset to a different state
 	 * @param assetId -  Id of asset to route
 	 * @param stateId - Id of the state to route to
+	 * @return - The response from the server
 	 */
 	public AssetRouteResponse route(int assetId, int stateId) {
 		return route(new AssetRouteRequest(assetId,stateId));
@@ -213,7 +219,7 @@ public class AccessAsset {
 	/**
 	 * Update the fields of an asset
 	 * @param request - The request containing what do delete and add to the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetUpdateResponse update(AssetUpdateRequest request) {
 		return MakeRequest.makeRequest("/Asset/Update", request, api, AssetUpdateResponse.class);
@@ -222,7 +228,7 @@ public class AccessAsset {
 	/**
 	 * Upload a binary file to the cms
 	 * @param request - The request to upload the asset
-	 * @return
+	 * @return - The response from the cms
 	 */
 	public AssetUploadResponse upload(AssetUploadRequest request) {
 		return MakeRequest.makeRequest("/Asset/Upload", request, api,AssetUploadResponse.class);

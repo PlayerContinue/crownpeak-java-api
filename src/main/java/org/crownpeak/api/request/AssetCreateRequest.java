@@ -77,6 +77,11 @@ public class AssetCreateRequest extends APIRequest {
 		this.type = Util.AssetTypes.FILE.value();
 	}
 	
+	/**
+	 * Create a new request to create an developer asset from a model
+	 * @param newName - The name of the new asset
+	 * @param destinationFolderId - The destinationFolderId
+	 */
 	public void createFolder(String newName, int destinationFolderId) {
 		this.newName = newName;
 		this.destinationFolderId = destinationFolderId;
@@ -87,7 +92,7 @@ public class AssetCreateRequest extends APIRequest {
 	/**
 	 * Create a C# developer Asset
 	 * @param newName - The name of the new asset
-	 * @param destinationId - The folder to create the asset in
+	 * @param destinationFolderId - The folder to create the asset in
 	 */
 	public void createDevAsset(String newName, int destinationFolderId) {
 		this.newName = newName;
