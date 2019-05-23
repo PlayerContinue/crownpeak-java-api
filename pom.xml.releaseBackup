@@ -3,7 +3,7 @@
 
 	<groupId>org.crownpeak.api</groupId>
 	<artifactId>crownpeak-java-api</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>crownpeak-java-api</name>
@@ -144,6 +144,9 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
 						<version>1.6</version>
+						<configuration>
+							<gpg.keyname>${gpg.keyname}</gpg.keyname>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
